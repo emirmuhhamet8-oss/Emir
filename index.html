@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ürün Kataloğu</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    html, body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f1629, #1a1f35);
+    }
+    body {
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    .fade-in {
+      animation: fadeIn 1s ease-out both;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .product-card {
+      background-color: #1a1f35;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(139,92,246,0.2), transparent);
+      z-index: 0;
+    }
+    .product-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(139, 92, 246, 0.4);
+    }
+    .product-card * {
+      position: relative;
+      z-index: 10;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    .logo img {
+      height: 60px;
+      filter: drop-shadow(0 0 8px rgba(139,92,246,0.4));
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.85; }
+    }
+    h1 {
+      font-weight: 900;
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 2.5rem;
+      background-image: linear-gradient(90deg, #8b5cf6, #ec4899, #6366f1);
+      background-size: 300%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shine 5s infinite linear;
+    }
+    @keyframes shine {
+      0% { background-position: 0% }
+      100% { background-position: 300% }
+    }
+    .modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+    }
+    .modal.show {
+      display: flex;
+    }
+    .modal-content {
+      background-color: #1a1f35;
+      padding: 2rem;
+      border-radius: 1rem;
+      width: 90%;
+      max-width: 600px;
+      color: white;
+      animation: fadeIn 0.3s ease-out;
+    }
+    .modal-content video {
+      width: 100%;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+    }
+  </style>
+</head>
+<body class="p-6 fade-in">
+  <div class="logo">
+    <img src="PrimeTR.jpg" alt="Logo" />
+  </div>
+
+  <h1>Ürün Kataloğu</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Ürün 1 -->
+   <!-- Ürün 1 -->
+<div onclick="openModal('Ürün Adı 1', 'valaront testing', '1.png', 'video1.mp4')" class="product-card block fade-in" style="animation-delay: 0.1s">
+  <img src="PrimeTR.jpg" alt="Ürün Resmi" class="rounded mb-4 w-full h-48 object-contain mx-auto" />
+  <h2 class="text-xl font-semibold mb-2 text-purple-300">Ürün Adı 1</h2>
+  <p class="text-sm text-gray-300">Bu ürün hakkında kısa bir açıklama. Özellikleri ve kullanım alanları burada özetlenebilir.</p>
+</div>
+
+
+    <!-- Ürün 2 -->
+    <div onclick="openModal('Ürün Adı 2', 'Başka bir ürün hakkında detaylı açıklama.', 'https://via.placeholder.com/400x200', '')" class="product-card block fade-in" style="animation-delay: 0.2s">
+      <img src="https://via.placeholder.com/400x200" alt="Ürün Resmi" class="rounded mb-4 w-full h-48 object-cover" />
+      <h2 class="text-xl font-semibold mb-2 text-purple-300">Ürün Adı 2</h2>
+      <p class="text-sm text-gray-300">Başka bir ürün hakkında açıklama. Burada teknik detaylar ya da kullanım bilgisi yer alabilir.</p>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="productModal" class="modal" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <h2 id="modalTitle" class="text-2xl font-bold mb-2"></h2>
+      <video id="modalVideo" controls class="hidden"></video>
+      <img id="modalImage" src="" alt="" class="w-full rounded mb-4" />
+      <p id="modalDescription" class="text-sm text-gray-300"></p>
+      <button onclick="closeModal()" class="mt-4 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded w-full">Kapat</button>
+    </div>
+  </div>
+
+  <script>
+    function openModal(title, description, image, videoUrl) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalDescription').textContent = description;
+
+      const video = document.getElementById('modalVideo');
+      const imageEl = document.getElementById('modalImage');
+
+      if (videoUrl) {
+        video.src = videoUrl;
+        video.classList.remove('hidden');
+        imageEl.classList.add('hidden');
+      } else {
+        video.src = '';
+        video.classList.add('hidden');
+        imageEl.classList.remove('hidden');
+        imageEl.src = image;
+      }
+
+      document.getElementById('productModal').classList.add('show');
+    }
+
+    function closeModal(event) {
+      const modal = document.getElementById('productModal');
+      if (!event || event.target === modal || event.type === 'click') {
+        modal.classList.remove('show');
+        const video = document.getElementById('modalVideo');
+        video.pause();
+        video.currentTime = 0;
+      }
+    }
+  </script>
+</body>
+</html>
