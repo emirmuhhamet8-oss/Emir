@@ -1,0 +1,37 @@
+<!-- Yeni ürün eklemek için aşağıdaki açıklamayı izle -->
+<!--
+  Yeni bir ürün kartı eklemek için bu yapıyı kopyala:
+
+  <div onclick="openModal('Ürün Adı', 'Ürün açıklaması', 'Görsel URL', 'Video URL')" class="product-card block fade-in" style="animation-delay: 0.Xs">
+    <img src="Görsel URL" alt="Ürün Resmi" class="rounded mb-4 w-full h-48 object-cover" />
+    <h2 class="text-xl font-semibold mb-2 text-purple-300">Ürün Adı</h2>
+    <p class="text-sm text-gray-300">Kısa ürün açıklaması buraya.</p>
+  </div>
+
+  Açıklamalar:
+  - 'Ürün Adı': Kart başlığı olarak görünecek metin.
+  - 'Ürün açıklaması': Modal içinde detaylı gösterilecek açıklama.
+  - 'Görsel URL': Kartta ve modalda gösterilecek resim.
+  - 'Video URL': Modalda gösterilecek video (boş bırakabilirsin: '')
+  - animation-delay: Her üründe farklı gecikme vererek hoş geçiş efekti oluşturabilirsin (örn. 0.1s, 0.2s, 0.3s ...)
+-->
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <style>
+    .fade-in {
+      animation: fadeIn 0.8s ease-out both;
+    }
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+  <!-- geri kalan kod olduğu gibi korunur -->
